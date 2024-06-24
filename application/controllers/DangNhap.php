@@ -34,6 +34,17 @@ class DangNhap extends CI_Controller {
 				    'taikhoan'  => $taikhoan,
 				    'login' => True,
 				    'hoten' => $this->Model_DangNhap->getInfoByUsername($taikhoan)[0]['HoTen'],
+				    'chucvu' => $this->Model_DangNhap->getInfoByUsername($taikhoan)[0]['PhanQuyen']
+				);
+				$this->session->set_userdata($newdata);
+				return redirect(base_url());
+			}else if($this->Model_DangNhap->checkAccountEmployeee($taikhoan, $matkhau) >= 1){
+				$newdata = array(
+				    'taikhoan'  => $taikhoan,
+				    'login' => True,
+				    'hoten' => $this->Model_DangNhap->getInfoEmployeeeByUsername($taikhoan)[0]['HoTen'],
+				    'chucvu' => $this->Model_DangNhap->getInfoEmployeeeByUsername($taikhoan)[0]['PhanQuyen'],
+				    'maphongban' => $this->Model_DangNhap->getInfoEmployeeeByUsername($taikhoan)[0]['MaPB'],
 				);
 				$this->session->set_userdata($newdata);
 				return redirect(base_url());

@@ -17,41 +17,79 @@ class TraLuong extends CI_Controller {
 
 	public function index()
 	{
-		$totalRecords = $this->Model_TraLuong->checkNumber();
-		$recordsPerPage = 10;
-		$totalPages = ceil($totalRecords / $recordsPerPage); 
+		if($this->session->userdata('chucvu') == 3){
+			$totalRecords = $this->Model_TraLuong->checkNumber();
+			$recordsPerPage = 10;
+			$totalPages = ceil($totalRecords / $recordsPerPage); 
 
-		$data['totalPages'] = $totalPages;
-		$data['list'] = $this->Model_TraLuong->getAll();
-		return $this->load->view('View_TraLuong', $data);
+			$data['totalPages'] = $totalPages;
+			$data['list'] = $this->Model_TraLuong->getAll();
+			return $this->load->view('View_TraLuong', $data);
+		}else{
+			$totalRecords = $this->Model_TraLuong->checkNumberQuanLy($this->session->userdata('maphongban'));
+			$recordsPerPage = 10;
+			$totalPages = ceil($totalRecords / $recordsPerPage); 
+
+			$data['totalPages'] = $totalPages;
+			$data['list'] = $this->Model_TraLuong->getAllQuanLy($this->session->userdata('maphongban'));
+			return $this->load->view('View_TraLuong', $data);
+		}
+		
 	}
 
 
 	public function Page($trang){
 
-		$totalRecords = $this->Model_TraLuong->checkNumber();
-		$recordsPerPage = 10;
-		$totalPages = ceil($totalRecords / $recordsPerPage); 
+		if($this->session->userdata('chucvu') == 3){
+			$totalRecords = $this->Model_TraLuong->checkNumber();
+			$recordsPerPage = 10;
+			$totalPages = ceil($totalRecords / $recordsPerPage); 
 
-		if($trang < 1){
-			return redirect(base_url('tra-luong/'));
-		}
+			if($trang < 1){
+				return redirect(base_url('tra-luong/'));
+			}
 
-		if($trang > $totalPages){
-			return redirect(base_url('tra-luong/'));
-		}
+			if($trang > $totalPages){
+				return redirect(base_url('tra-luong/'));
+			}
 
-		$start = ($trang - 1) * $recordsPerPage;
+			$start = ($trang - 1) * $recordsPerPage;
 
 
-		if($start == 0){
-			$data['totalPages'] = $totalPages;
-			$data['list'] = $this->Model_TraLuong->getAll();
-			return $this->load->view('View_TraLuong', $data);
+			if($start == 0){
+				$data['totalPages'] = $totalPages;
+				$data['list'] = $this->Model_TraLuong->getAll();
+				return $this->load->view('View_TraLuong', $data);
+			}else{
+				$data['totalPages'] = $totalPages;
+				$data['list'] = $this->Model_TraLuong->getAll($start);
+				return $this->load->view('View_TraLuong', $data);
+			}
 		}else{
-			$data['totalPages'] = $totalPages;
-			$data['list'] = $this->Model_TraLuong->getAll($start);
-			return $this->load->view('View_TraLuong', $data);
+			$totalRecords = $this->Model_TraLuong->checkNumberQuanLy($this->session->userdata('maphongban'));
+			$recordsPerPage = 10;
+			$totalPages = ceil($totalRecords / $recordsPerPage); 
+
+			if($trang < 1){
+				return redirect(base_url('tra-luong/'));
+			}
+
+			if($trang > $totalPages){
+				return redirect(base_url('tra-luong/'));
+			}
+
+			$start = ($trang - 1) * $recordsPerPage;
+
+
+			if($start == 0){
+				$data['totalPages'] = $totalPages;
+				$data['list'] = $this->Model_TraLuong->getAllQuanLy($this->session->userdata('maphongban'));
+				return $this->load->view('View_TraLuong', $data);
+			}else{
+				$data['totalPages'] = $totalPages;
+				$data['list'] = $this->Model_TraLuong->getAllQuanLy($this->session->userdata('maphongban'),$start);
+				return $this->load->view('View_TraLuong', $data);
+			}
 		}
 	}
 

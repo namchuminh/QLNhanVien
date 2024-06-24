@@ -14,42 +14,80 @@ class NhanVien extends CI_Controller {
 
 	public function index()
 	{
-		$totalRecords = $this->Model_NhanVien->checkNumber();
-		$recordsPerPage = 10;
-		$totalPages = ceil($totalRecords / $recordsPerPage); 
+		if($this->session->userdata('chucvu') == 3){
+			$totalRecords = $this->Model_NhanVien->checkNumber();
+			$recordsPerPage = 10;
+			$totalPages = ceil($totalRecords / $recordsPerPage); 
 
-		$data['totalPages'] = $totalPages;
-		$data['list'] = $this->Model_NhanVien->getAll();
-		return $this->load->view('View_NhanVien', $data);
+			$data['totalPages'] = $totalPages;
+			$data['list'] = $this->Model_NhanVien->getAll();
+			return $this->load->view('View_NhanVien', $data);
+		}else{
+			$totalRecords = $this->Model_NhanVien->checkNumberEmployeee($this->session->userdata('maphongban'));
+			$recordsPerPage = 10;
+			$totalPages = ceil($totalRecords / $recordsPerPage); 
+
+			$data['totalPages'] = $totalPages;
+			$data['list'] = $this->Model_NhanVien->getAllEmployeee($this->session->userdata('maphongban'));
+			return $this->load->view('View_NhanVien', $data);
+		}
 	}
 
 
 	public function Page($trang){
 
-		$totalRecords = $this->Model_NhanVien->checkNumber();
-		$recordsPerPage = 10;
-		$totalPages = ceil($totalRecords / $recordsPerPage); 
+		if($this->session->userdata('chucvu') == 3){
+			$totalRecords = $this->Model_NhanVien->checkNumber();
+			$recordsPerPage = 10;
+			$totalPages = ceil($totalRecords / $recordsPerPage); 
 
-		if($trang < 1){
-			return redirect(base_url('nhan-vien/'));
-		}
+			if($trang < 1){
+				return redirect(base_url('nhan-vien/'));
+			}
 
-		if($trang > $totalPages){
-			return redirect(base_url('nhan-vien/'));
-		}
+			if($trang > $totalPages){
+				return redirect(base_url('nhan-vien/'));
+			}
 
-		$start = ($trang - 1) * $recordsPerPage;
+			$start = ($trang - 1) * $recordsPerPage;
 
 
-		if($start == 0){
-			$data['totalPages'] = $totalPages;
-			$data['list'] = $this->Model_NhanVien->getAll();
-			return $this->load->view('View_NhanVien', $data);
+			if($start == 0){
+				$data['totalPages'] = $totalPages;
+				$data['list'] = $this->Model_NhanVien->getAll();
+				return $this->load->view('View_NhanVien', $data);
+			}else{
+				$data['totalPages'] = $totalPages;
+				$data['list'] = $this->Model_NhanVien->getAll($start);
+				return $this->load->view('View_NhanVien', $data);
+			}
 		}else{
-			$data['totalPages'] = $totalPages;
-			$data['list'] = $this->Model_NhanVien->getAll($start);
-			return $this->load->view('View_NhanVien', $data);
+			$totalRecords = $this->Model_NhanVien->checkNumberEmployeee($this->session->userdata('maphongban'));
+			$recordsPerPage = 10;
+			$totalPages = ceil($totalRecords / $recordsPerPage); 
+
+			if($trang < 1){
+				return redirect(base_url('nhan-vien/'));
+			}
+
+			if($trang > $totalPages){
+				return redirect(base_url('nhan-vien/'));
+			}
+
+			$start = ($trang - 1) * $recordsPerPage;
+
+
+			if($start == 0){
+				$data['totalPages'] = $totalPages;
+				$data['list'] = $this->Model_NhanVien->getAllEmployeee($this->session->userdata('maphongban'));
+				return $this->load->view('View_NhanVien', $data);
+			}else{
+				$data['totalPages'] = $totalPages;
+				$data['list'] = $this->Model_NhanVien->getAllEmployeee($this->session->userdata('maphongban'),$start);
+				return $this->load->view('View_NhanVien', $data);
+			}
 		}
+		
 	}
 
 	public function Add(){
@@ -106,6 +144,11 @@ class NhanVien extends CI_Controller {
 		$data['hocvan'] = $this->Model_NhanVien->getAllHocVan();
 		$data['phongban'] = $this->Model_NhanVien->getAllPhongBan();
 		$data['chucvu'] = $this->Model_NhanVien->getAllChucVu();
+
+		if($this->session->userdata('chucvu') != 3){
+			$data['phongban'] = $this->Model_NhanVien->getAllPhongBanQuanLy($this->session->userdata('maphongban'));
+			$data['chucvu'] = $this->Model_NhanVien->getAllChucVuQuanLy();
+		}
 
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$hoten = $this->input->post('hoten');

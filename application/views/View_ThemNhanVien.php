@@ -88,17 +88,33 @@
                                                 <div class="col-4">
                                                     <label for="simpleinput">Chức Vụ</label>
                                                     <select name="chucvu" required="" class="form-control">
-                                                        <?php foreach ($chucvu as $key => $value): ?>
-                                                            <option value="<?php echo $value["MaCV"]; ?>"><?php echo $value["TenCV"]; ?></option>
-                                                        <?php endforeach ?>
+                                                        <?php if($_SESSION['chucvu'] == 3){ ?>
+                                                            <?php foreach ($chucvu as $key => $value): ?>
+                                                                <option value="<?php echo $value["MaCV"]; ?>"><?php echo $value["TenCV"]; ?></option>
+                                                            <?php endforeach ?>
+                                                        <?php }else{ ?>
+                                                            <?php foreach ($chucvu as $key => $value): ?>
+                                                                <?php if(($value["MaCV"] != 3) & ($value["MaCV"] != 4)){ ?>
+                                                                    <option value="<?php echo $value["MaCV"]; ?>"><?php echo $value["TenCV"]; ?></option>
+                                                                <?php } ?>
+                                                            <?php endforeach ?>
+                                                        <?php } ?>
                                                     </select>
                                                 </div>
                                                 <div class="col-4">
                                                     <label for="simpleinput">Phòng Ban</label>
                                                     <select name="phongban" required="" class="form-control">
-                                                        <?php foreach ($phongban as $key => $value): ?>
-                                                            <option value="<?php echo $value["MaPB"]; ?>"><?php echo $value["TenPhongBan"]; ?></option>
-                                                        <?php endforeach ?>
+                                                        <?php if($_SESSION['chucvu'] == 3){ ?>
+                                                            <?php foreach ($phongban as $key => $value): ?>
+                                                                <option value="<?php echo $value["MaPB"]; ?>"><?php echo $value["TenPhongBan"]; ?></option>
+                                                            <?php endforeach ?>
+                                                        <?php }else{ ?>
+                                                            <?php foreach ($phongban as $key => $value): ?>
+                                                                <?php if($_SESSION['maphongban'] == $value["MaPB"]){ ?>
+                                                                    <option value="<?php echo $value["MaPB"]; ?>"><?php echo $value["TenPhongBan"]; ?></option>
+                                                                <?php } ?>
+                                                            <?php endforeach ?>
+                                                        <?php } ?>
                                                     </select>
                                                 </div>
                                                 <div class="col-4">

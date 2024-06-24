@@ -15,47 +15,92 @@ class Luong extends CI_Controller {
 
 	public function index()
 	{
-		$totalRecords = $this->Model_Luong->checkNumber();
-		$recordsPerPage = 10;
-		$totalPages = ceil($totalRecords / $recordsPerPage); 
+		if($this->session->userdata('chucvu') == 3){
+			$totalRecords = $this->Model_Luong->checkNumber();
+			$recordsPerPage = 10;
+			$totalPages = ceil($totalRecords / $recordsPerPage); 
 
-		$data['totalPages'] = $totalPages;
-		$data['list'] = $this->Model_Luong->getAll();
-		return $this->load->view('View_Luong', $data);
+			$data['totalPages'] = $totalPages;
+			$data['list'] = $this->Model_Luong->getAll();
+			return $this->load->view('View_Luong', $data);
+		}else{
+			$totalRecords = $this->Model_Luong->checkNumberQuanLy($this->session->userdata('maphongban'));
+			$recordsPerPage = 10;
+			$totalPages = ceil($totalRecords / $recordsPerPage); 
+
+			$data['totalPages'] = $totalPages;
+			$data['list'] = $this->Model_Luong->getAllQuanLy($this->session->userdata('maphongban'));
+			return $this->load->view('View_Luong', $data);
+		}
+		
 	}
 
 
 	public function Page($trang){
 
-		$totalRecords = $this->Model_Luong->checkNumber();
-		$recordsPerPage = 10;
-		$totalPages = ceil($totalRecords / $recordsPerPage); 
+		if($this->session->userdata('chucvu') == 3){
+			$totalRecords = $this->Model_Luong->checkNumber();
+			$recordsPerPage = 10;
+			$totalPages = ceil($totalRecords / $recordsPerPage); 
 
-		if($trang < 1){
-			return redirect(base_url('bang-luong/'));
-		}
+			if($trang < 1){
+				return redirect(base_url('bang-luong/'));
+			}
 
-		if($trang > $totalPages){
-			return redirect(base_url('bang-luong/'));
-		}
+			if($trang > $totalPages){
+				return redirect(base_url('bang-luong/'));
+			}
 
-		$start = ($trang - 1) * $recordsPerPage;
+			$start = ($trang - 1) * $recordsPerPage;
 
 
-		if($start == 0){
-			$data['totalPages'] = $totalPages;
-			$data['list'] = $this->Model_Luong->getAll();
-			return $this->load->view('View_Luong', $data);
+			if($start == 0){
+				$data['totalPages'] = $totalPages;
+				$data['list'] = $this->Model_Luong->getAll();
+				return $this->load->view('View_Luong', $data);
+			}else{
+				$data['totalPages'] = $totalPages;
+				$data['list'] = $this->Model_Luong->getAll($start);
+				return $this->load->view('View_Luong', $data);
+			}
 		}else{
-			$data['totalPages'] = $totalPages;
-			$data['list'] = $this->Model_Luong->getAll($start);
-			return $this->load->view('View_Luong', $data);
+			$totalRecords = $this->Model_Luong->checkNumberQuanLy($this->session->userdata('maphongban'));
+			$recordsPerPage = 10;
+			$totalPages = ceil($totalRecords / $recordsPerPage); 
+
+			if($trang < 1){
+				return redirect(base_url('bang-luong/'));
+			}
+
+			if($trang > $totalPages){
+				return redirect(base_url('bang-luong/'));
+			}
+
+			$start = ($trang - 1) * $recordsPerPage;
+
+
+			if($start == 0){
+				$data['totalPages'] = $totalPages;
+				$data['list'] = $this->Model_Luong->getAllQuanLy($this->session->userdata('maphongban'));
+				return $this->load->view('View_Luong', $data);
+			}else{
+				$data['totalPages'] = $totalPages;
+				$data['list'] = $this->Model_Luong->getAllQuanLy($this->session->userdata('maphongban'),$start);
+				return $this->load->view('View_Luong', $data);
+			}
 		}
 	}
 
 	public function Add(){
 		$data['phongban'] = $this->Model_NhanVien->getAllPhongBan();
 		$data['chucvu'] = $this->Model_NhanVien->getAllChucVu();
+
+
+		if($this->session->userdata('chucvu') != 3){
+			$data['phongban'] = $this->Model_NhanVien->getAllPhongBanQuanLy($this->session->userdata('maphongban'));
+			$data['chucvu'] = $this->Model_NhanVien->getAllChucVuQuanLy();
+		}
+
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$nhanvien = $this->input->post('nhanvien');
 			$phongban = $this->input->post('phongban');
@@ -101,6 +146,11 @@ class Luong extends CI_Controller {
 			$chucVuId = $this->input->post('chucVuId');
 
 			$data = $this->Model_NhanVien->getBySelected($phongBanId, $chucVuId);
+
+			if($this->session->userdata('chucvu') != 3){
+				$data = $this->Model_NhanVien->getBySelectedNhanVien($phongBanId, $chucVuId);
+			}
+
 			echo json_encode($data);
 		}else{
 			return redirect(base_url('bang-luong/'));

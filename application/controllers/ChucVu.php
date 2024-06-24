@@ -55,6 +55,10 @@ class ChucVu extends CI_Controller {
 
 	public function Add(){
 
+		if($this->session->userdata('chucvu') != 3){
+			return redirect('chuc-vu/');
+		}
+
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$tenchucvu = $this->input->post('tenchucvu');
 			$mota = $this->input->post('mota');
@@ -69,6 +73,10 @@ class ChucVu extends CI_Controller {
 	}
 
 	public function View($MaChucVu){
+		if($this->session->userdata('chucvu') != 3){
+			return redirect('chuc-vu/');
+		}
+			
 		if(count($this->Model_ChucVu->getById($MaChucVu)) == 0){
 			return redirect(base_url('chuc-vu/'));
 		}
@@ -90,6 +98,9 @@ class ChucVu extends CI_Controller {
 	}
 
 	public function delete($MaChucVu){
+		if(($MaChucVu == 1) || ($MaChucVu == 3) || ($MaChucVu == 4)){
+			return redirect(base_url('chuc-vu/'));
+		}
 		$this->Model_ChucVu->delete($MaChucVu);
 		return redirect(base_url('chuc-vu/'));
 	}

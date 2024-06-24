@@ -114,21 +114,33 @@
                             </ul>
                         </li>
 
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="bx bxs-book-content"></i><span>Phòng Ban</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="<?php echo base_url('phong-ban/'); ?>">Danh Sách</a></li>
-                                <li><a href="<?php echo base_url('phong-ban/them/'); ?>">Thêm Mới</a></li>
-                            </ul>
-                        </li>
+                        <?php if($_SESSION['chucvu'] == 3){ ?>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="bx bxs-book-content"></i><span>Phòng Ban</span></a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="<?php echo base_url('phong-ban/'); ?>">Danh Sách</a></li>
+                                    <li><a href="<?php echo base_url('phong-ban/them/'); ?>">Thêm Mới</a></li>
+                                </ul>
+                            </li>
+                        <?php }else{ ?>
+                            <li>
+                                <a href="<?php echo base_url('phong-ban/'); ?>"><i class="bx bxs-book-content"></i><span>Phòng Ban</span></a>
+                            </li>
+                        <?php } ?>
 
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="bx bx-layer"></i><span>Chức Vụ</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="<?php echo base_url('chuc-vu/'); ?>">Danh Sách</a></li>
-                                <li><a href="<?php echo base_url('chuc-vu/them/'); ?>">Thêm Mới</a></li>
-                            </ul>
-                        </li>
+                        <?php if($_SESSION['chucvu'] == 3){ ?>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="bx bx-layer"></i><span>Chức Vụ</span></a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="<?php echo base_url('chuc-vu/'); ?>">Danh Sách</a></li>
+                                    <li><a href="<?php echo base_url('chuc-vu/them/'); ?>">Thêm Mới</a></li>
+                                </ul>
+                            </li>
+                        <?php }else{ ?>
+                            <li>
+                                <a href="<?php echo base_url('chuc-vu/'); ?>"><i class="bx bx-layer"></i><span>Chức Vụ</span></a>
+                            </li>
+                        <?php } ?>
 
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="bx bxs-book"></i><span>Trình Độ</span></a>

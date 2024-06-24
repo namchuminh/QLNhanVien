@@ -9,6 +9,18 @@ class Model_NhanVien extends CI_Model {
 		parent::__construct();
 	}
 
+	public function getAllEmployeee($maphongban, $start = 0, $end = 10){
+		$sql = "SELECT nhanvien.*, phongban.TenPhongBan, chucvu.TenCV FROM nhanvien, phongban, chucvu WHERE nhanvien.MaPB = phongban.MaPB AND nhanvien.MaCV = chucvu.MaCV AND nhanvien.PhanQuyen != 2 AND nhanvien.PhanQuyen != 3 AND nhanvien.MaPB = ? ORDER BY nhanvien.MaNV DESC LIMIT ?, ?";
+		$result = $this->db->query($sql, array($maphongban, $start, $end));
+		return $result->result_array();
+	}
+
+	public function checkNumberEmployeee($maphongban){
+		$sql = "SELECT nhanvien.*, phongban.TenPhongBan, chucvu.TenCV FROM nhanvien, phongban, chucvu WHERE nhanvien.MaPB = phongban.MaPB AND nhanvien.MaCV = chucvu.MaCV AND nhanvien.PhanQuyen != 2 AND nhanvien.PhanQuyen != 3 AND nhanvien.MaPB = ?";
+		$result = $this->db->query($sql, array($maphongban));
+		return $result->num_rows();
+	}
+
 	public function getAll($start = 0, $end = 10){
 		$sql = "SELECT nhanvien.*, phongban.TenPhongBan, chucvu.TenCV FROM nhanvien, phongban, chucvu WHERE nhanvien.MaPB = phongban.MaPB AND nhanvien.MaCV = chucvu.MaCV ORDER BY nhanvien.MaNV DESC LIMIT ?, ?";
 		$result = $this->db->query($sql, array($start, $end));
@@ -64,6 +76,18 @@ class Model_NhanVien extends CI_Model {
 		return $result->result_array();
 	}
 
+	public function getAllPhongBanQuanLy($maphongban){
+		$sql = "SELECT * FROM phongban WHERE MaPB = ? ORDER BY MaPB DESC";
+		$result = $this->db->query($sql, array($maphongban));
+		return $result->result_array();
+	}
+
+	public function getAllChucVuQuanLy(){
+		$sql = "SELECT * FROM chucvu WHERE MaCV != 3 AND MaCV != 4 ORDER BY MaCV DESC";
+		$result = $this->db->query($sql);
+		return $result->result_array();
+	}
+
 	public function getAllChucVu(){
 		$sql = "SELECT * FROM chucvu ORDER BY MaCV DESC";
 		$result = $this->db->query($sql);
@@ -76,6 +100,11 @@ class Model_NhanVien extends CI_Model {
 		return $result->result_array();
 	}
 
+	public function getBySelectedNhanVien($phongBanId, $chucVuId){
+		$sql = "SELECT * FROM nhanvien WHERE MaPB = ? AND MaCV = ? AND PhanQuyen != 2 AND PhanQuyen != 3 ORDER BY MaNV DESC";
+		$result = $this->db->query($sql, array($phongBanId, $chucVuId));
+		return $result->result_array();
+	}
 }
 
 /* End of file Model_KhachHang.php */

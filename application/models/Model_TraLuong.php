@@ -15,6 +15,19 @@ class Model_TraLuong extends CI_Model {
 		return $result->result_array();
 	}
 
+	public function getAllQuanLy($machucvu, $start = 0, $end = 10){
+		$sql = "SELECT traluong.*, nhanvien.HoTen, nhanvien.NgaySinh, nhanvien.GioiTinh, chucvu.TenCV, phongban.TenPhongBan FROM traluong, nhanvien, chucvu, phongban WHERE traluong.MaNV = nhanvien.MaNV AND nhanvien.MaCV = chucvu.MaCV AND nhanvien.MaPB = phongban.MaPB AND nhanvien.PhanQuyen != 3 AND nhanvien.PhanQuyen != 2 AND nhanvien.MaPB = ? ORDER BY traluong.MaTraLuong DESC LIMIT ?, ?";
+		$result = $this->db->query($sql, array($machucvu, $start, $end));
+		return $result->result_array();
+	}
+
+	public function checkNumberQuanLy($machucvu)
+	{
+		$sql = "SELECT traluong.*, nhanvien.HoTen, nhanvien.NgaySinh, nhanvien.GioiTinh, chucvu.TenCV, phongban.TenPhongBan FROM traluong, nhanvien, chucvu, phongban WHERE traluong.MaNV = nhanvien.MaNV AND nhanvien.MaCV = chucvu.MaCV AND nhanvien.MaPB = phongban.MaPB AND nhanvien.PhanQuyen != 3 AND nhanvien.PhanQuyen != 2 AND nhanvien.MaPB = ?";
+		$result = $this->db->query($sql, array($machucvu));
+		return $result->num_rows();
+	}
+
 	public function checkNumber()
 	{
 		$sql = "SELECT * FROM traluong";

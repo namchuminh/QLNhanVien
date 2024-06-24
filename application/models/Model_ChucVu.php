@@ -10,7 +10,7 @@ class Model_ChucVu extends CI_Model {
 	}
 
 	public function getAll($start = 0, $end = 10){
-		$sql = "SELECT * FROM chucvu ORDER BY MaCV DESC LIMIT ?, ?";
+		$sql = "SELECT * FROM chucvu ORDER BY LuongCoBan DESC LIMIT ?, ?";
 		$result = $this->db->query($sql, array($start, $end));
 		return $result->result_array();
 	}

@@ -49,14 +49,16 @@
                                                 <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
                                                     colspan="1"
                                                     >Mô Tả</th>
-	                                            <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-                                                    colspan="1"
-                                                    >Xem Chi Tiết
-                                                </th>
-                                                <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-                                                    colspan="1"
-                                                    >Xóa Phòng Ban
-                                                </th>
+                                                <?php if($_SESSION['chucvu'] == 3){ ?>
+    	                                            <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
+                                                        colspan="1"
+                                                        >Xem Chi Tiết
+                                                    </th>
+                                                    <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
+                                                        colspan="1"
+                                                        >Xóa Phòng Ban
+                                                    </th>
+                                                <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -69,12 +71,14 @@
                                                     <td><?php echo $value['Email']; ?></td>
                                                     <td><?php echo $value['Website']; ?></td>
                                                     <td><?php echo substr($value['MoTa'],0,20); ?></td>
-                                                    <td>
-                                                        <a class="btn btn-secondary" style="width: 100%;" href="<?php echo base_url('phong-ban/xem/'.$value['MaPB'].'/') ?>">XEM</a>
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn btn-danger" style="width: 100%;" href="<?php echo base_url('phong-ban/xoa/'.$value['MaPB'].'/') ?>">XÓA</a>
-                                                    </td>
+                                                    <?php if($_SESSION['chucvu'] == 3){ ?>
+                                                        <td>
+                                                            <a class="btn btn-secondary" style="width: 100%;" href="<?php echo base_url('phong-ban/xem/'.$value['MaPB'].'/') ?>">XEM</a>
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn btn-danger" style="width: 100%;" href="<?php echo base_url('phong-ban/xoa/'.$value['MaPB'].'/') ?>">XÓA</a>
+                                                        </td>
+                                                    <?php } ?>
     	                                        </tr>
                                         	<?php endforeach ?>
                                         </tbody>

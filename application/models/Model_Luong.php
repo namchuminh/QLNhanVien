@@ -15,6 +15,18 @@ class Model_Luong extends CI_Model {
 		return $result->result_array();
 	}
 
+	public function getAllQuanLy($maphongban, $start = 0, $end = 10){
+		$sql = "SELECT luong.*, nhanvien.HoTen, nhanvien.NgaySinh, nhanvien.GioiTinh, chucvu.TenCV, chucvu.LuongCoBan, phongban.TenPhongBan FROM luong, nhanvien, chucvu, phongban WHERE luong.MaNV = nhanvien.MaNV AND nhanvien.MaCV = chucvu.MaCV AND nhanvien.MaPB = phongban.MaPB AND nhanvien.PhanQuyen != 2 AND nhanvien.PhanQuyen != 3 AND nhanvien.MaPB = ? ORDER BY luong.MaLuong DESC LIMIT ?, ?";
+		$result = $this->db->query($sql, array($maphongban, $start, $end));
+		return $result->result_array();
+	}
+
+	public function checkNumberQuanLy($maphongban){
+		$sql = "SELECT luong.*, nhanvien.HoTen, nhanvien.NgaySinh, nhanvien.GioiTinh, chucvu.TenCV, chucvu.LuongCoBan, phongban.TenPhongBan FROM luong, nhanvien, chucvu, phongban WHERE luong.MaNV = nhanvien.MaNV AND nhanvien.MaCV = chucvu.MaCV AND nhanvien.MaPB = phongban.MaPB AND nhanvien.PhanQuyen != 2 AND nhanvien.PhanQuyen != 3 AND nhanvien.MaPB = ?";
+		$result = $this->db->query($sql, array($maphongban));
+		return $result->num_rows();
+	}
+
 	public function checkNumber()
 	{
 		$sql = "SELECT * FROM luong";

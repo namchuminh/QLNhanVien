@@ -32,7 +32,9 @@
                                                 <label for="simpleinput">Tên Phòng Ban</label>
                                                 <select name="phongban" required="" class="form-control" id="phongbanSelect">
                                                     <?php foreach ($phongban as $key => $value): ?>
-                                                        <option value="<?php echo $value["MaPB"]; ?>"><?php echo $value["TenPhongBan"]; ?></option>
+                                                        <?php if($_SESSION['maphongban'] == $value["MaPB"]){ ?>
+                                                            <option value="<?php echo $value["MaPB"]; ?>"><?php echo $value["TenPhongBan"]; ?></option>
+                                                        <?php } ?>
                                                     <?php endforeach ?>
                                                 </select>
                                             </div>
@@ -40,7 +42,9 @@
                                                 <label for="simpleinput">Chức Vụ</label>
                                                 <select name="chucvu" required="" class="form-control" id="chucvuSelect">
                                                     <?php foreach ($chucvu as $key => $value): ?>
-                                                        <option value="<?php echo $value["MaCV"]; ?>"><?php echo $value["TenCV"]; ?></option>
+                                                        <?php if(($value["MaCV"] != 3) && ($value["MaCV"] != 4)){ ?>
+                                                            <option value="<?php echo $value["MaCV"]; ?>"><?php echo $value["TenCV"]; ?></option>
+                                                        <?php } ?>
                                                     <?php endforeach ?>
                                                 </select>
                                             </div>

@@ -28,38 +28,38 @@
                                     <table class="table mb-0">
                                         <thead>
                                             <tr>
-	                                            <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-	                                                colspan="1"
+	                                            <th 
+	                                                
 	                                                >STT</th>
-                                                <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-                                                    colspan="1"
+                                                <th 
+                                                    
                                                     >Tên Nhân Viên</th>
-	                                            <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-	                                                colspan="1"
+	                                            <th 
+	                                                
 	                                                >Ngày Sinh</th>
-                                                <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-                                                    colspan="1"
+                                                <th 
+                                                    
                                                     >Giới Tính</th>
-                                                <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-                                                    colspan="1"
+                                                <th 
+                                                    
                                                     >Tên Phòng Ban</th>
-                                                <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-                                                    colspan="1"
+                                                <th 
+                                                    
                                                     >Chức Vụ</th>
-                                                <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-                                                    colspan="1"
+                                                <th 
+                                                    
                                                     >Lương Cơ Bản</th>
-                                                <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-                                                    colspan="1"
+                                                <th 
+                                                    
                                                     >Hệ Số Lương</th>
-                                                <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-                                                    colspan="1"
+                                                <th 
+                                                    
                                                     >Thưởng Phụ Cấp</th>
-                                                <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-                                                    colspan="1"
+                                                <th 
+                                                    
                                                     >Hệ Số Phụ Cấp</th>
-	                                            <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-                                                    colspan="1"
+	                                            <th 
+                                                    
                                                     >Xem Chi Tiết
                                                 </th>
                                             </tr>

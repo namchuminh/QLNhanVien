@@ -40,14 +40,16 @@
                                                 <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
                                                     colspan="1"
                                                     >Mức Lương Cơ Bản</th>
-	                                            <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-                                                    colspan="1"
-                                                    >Xem Chi Tiết
-                                                </th>
-                                                <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
-                                                    colspan="1"
-                                                    >Xóa Chức Vụ
-                                                </th>
+                                                <?php if($_SESSION['chucvu'] == 3){ ?>
+    	                                            <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
+                                                        colspan="1"
+                                                        >Xem Chi Tiết
+                                                    </th>
+                                                    <th tabindex="0" aria-controls="basic-datatable" rowspan="1"
+                                                        colspan="1"
+                                                        >Xóa Chức Vụ
+                                                    </th>
+                                                <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -57,12 +59,20 @@
     	                                            <td><?php echo $value['TenCV']; ?></td>
                                                     <td><?php echo $value['MoTa']; ?></td>
                                                     <td><?php echo number_format($value['LuongCoBan']); ?> VNĐ / tháng</td>
-                                                    <td>
-                                                        <a class="btn btn-secondary" style="width: 100%;" href="<?php echo base_url('chuc-vu/xem/'.$value['MaCV'].'/') ?>">XEM</a>
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn btn-danger" style="width: 100%;" href="<?php echo base_url('chuc-vu/xoa/'.$value['MaCV'].'/') ?>">XÓA</a>
-                                                    </td>
+                                                    <?php if($_SESSION['chucvu'] == 3){ ?>
+                                                        <td>
+                                                            <a class="btn btn-secondary" style="width: 100%;" href="<?php echo base_url('chuc-vu/xem/'.$value['MaCV'].'/') ?>">XEM</a>
+                                                        </td>
+                                                        <?php if(($value['MaCV'] == 3) || ($value['MaCV'] == 1) || ($value['MaCV'] == 4)){ ?>
+                                                            <td>
+                                                                <a class="btn btn-danger" style="width: 100%; cursor: not-allowed;" href="#" disabled>XÓA</a>
+                                                            </td>
+                                                        <?php }else{ ?>
+                                                            <td>
+                                                                <a class="btn btn-danger" style="width: 100%;" href="<?php echo base_url('chuc-vu/xoa/'.$value['MaCV'].'/') ?>">XÓA</a>
+                                                            </td>
+                                                        <?php } ?>
+                                                    <?php } ?>
     	                                        </tr>
                                         	<?php endforeach ?>
                                         </tbody>

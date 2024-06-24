@@ -20,6 +20,18 @@ class Model_DangNhap extends CI_Model {
 		$result = $this->db->query($sql, array($taikhoan));
 		return $result->result_array();
 	}
+
+	public function checkAccountEmployeee($taikhoan, $matkhau){
+		$sql = "SELECT * FROM nhanvien WHERE TaiKhoan = ? AND MatKhau = ? AND PhanQuyen = 2";
+		$result = $this->db->query($sql, array($taikhoan, $matkhau));
+		return $result->num_rows();
+	}
+
+	public function getInfoEmployeeeByUsername($taikhoan){
+		$sql = "SELECT * FROM nhanvien WHERE TaiKhoan = ?";
+		$result = $this->db->query($sql, array($taikhoan));
+		return $result->result_array();
+	}
 }
 
 /* End of file DangNhap.php */
