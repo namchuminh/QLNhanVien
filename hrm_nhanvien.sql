@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2024 at 05:30 PM
+-- Generation Time: Jan 11, 2024 at 10:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -40,8 +40,7 @@ CREATE TABLE `chucvu` (
 
 INSERT INTO `chucvu` (`MaCV`, `TenCV`, `MoTa`, `LuongCoBan`) VALUES
 (1, 'Nhân Viên', 'Người làm thuê cho công ty, có chức vụ khi mới tham gia là nhân viên.', 8000000),
-(3, 'Quản lý', 'Quản lý một phòng ban', 15000000),
-(4, 'Giám Đốc', 'Người chịu trách nhiệm toàn bộ công ty', 25000000);
+(3, 'Quản lý', 'Quản lý một phòng ban', 15000000);
 
 -- --------------------------------------------------------
 
@@ -62,9 +61,9 @@ CREATE TABLE `luong` (
 --
 
 INSERT INTO `luong` (`MaLuong`, `HeSoLuong`, `HeSoPhuCap`, `ThuongPhuCap`, `MaNV`) VALUES
-(5, 1.4, 1, 500000, 5),
-(6, 1.2, 1, 500000, 6),
-(7, 1.2, 1, 500000, 7);
+(1, 1.4, 1.2, 100000, 2),
+(4, 1.4, 1.2, 500000, 4),
+(5, 1.4, 1, 500000, 5);
 
 -- --------------------------------------------------------
 
@@ -86,20 +85,17 @@ CREATE TABLE `nhanvien` (
   `Avatar` varchar(255) DEFAULT NULL,
   `MaCV` int(11) DEFAULT NULL,
   `MaPB` int(11) DEFAULT NULL,
-  `MaTDHV` int(11) DEFAULT NULL,
-  `PhanQuyen` int(11) NOT NULL DEFAULT 1,
-  `TaiKhoan` varchar(255) NOT NULL,
-  `MatKhau` varchar(255) NOT NULL
+  `MaTDHV` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `nhanvien`
 --
 
-INSERT INTO `nhanvien` (`MaNV`, `HoTen`, `GioiTinh`, `NgaySinh`, `DanToc`, `QueQuan`, `SoDienThoai`, `TinhTrang`, `NgayBatDauLam`, `Email`, `Avatar`, `MaCV`, `MaPB`, `MaTDHV`, `PhanQuyen`, `TaiKhoan`, `MatKhau`) VALUES
-(5, 'Nguyễn Văn Bình', 1, '1998-02-11', 'Kinh', 'Hà Nội', '0379962045', 1, '2024-01-11', 'nguyenvanb@gmail.com', 'http://localhost/QLNhanVien/uploads/mat-buon-1.jpg', 1, 1, 1, 2, 'nguyenvanbinh', '21232f297a57a5a743894a0e4a801fc3'),
-(6, 'Pham Hoan', 1, '2001-05-06', 'Kinh', 'Cầu Giấy, Hà Nội', '0888999888', 1, '2024-04-22', 'phamhoan@gmail.com', 'http://localhost/QLNhanVien/uploads/download.png', 1, 1, 4, 1, 'phamhoan', '21232f297a57a5a743894a0e4a801fc3'),
-(7, 'Nguyễn Văn An', 1, '2024-05-28', 'Kinh', 'Cầu Giấy, Hà Nội', '0379962045', 1, '2024-06-24', 'letrunghieu@gmail.com', 'http://localhost/QLNhanVien/uploads/avatar.jpg', 1, 1, 1, 1, '', '');
+INSERT INTO `nhanvien` (`MaNV`, `HoTen`, `GioiTinh`, `NgaySinh`, `DanToc`, `QueQuan`, `SoDienThoai`, `TinhTrang`, `NgayBatDauLam`, `Email`, `Avatar`, `MaCV`, `MaPB`, `MaTDHV`) VALUES
+(2, 'Chu Minh Nam', 1, '2023-11-03', 'Kinh', 'Hà Nội', '0999888888', 1, '2023-11-07', 'chuminhnamma@gmail.com', 'http://localhost/QLNhanVien/uploads/doi-mat-buon-1.jpg', 3, 1, 1),
+(4, 'Nguyễn Văn An', 0, '2023-11-07', 'Kinh', 'Hà Nội', '0999888999', 1, '2023-11-14', 'nguyenvana@gmail.com', 'http://localhost/QLNhanVien/uploads/mat-buon-11.jpg', 3, 4, 3),
+(5, 'Nguyễn Văn Bình', 1, '1998-02-11', 'Kinh', 'Hà Nội', '0379962045', 1, '2024-01-11', 'nguyenvanb@gmail.com', 'http://localhost/QLNhanVien/uploads/mat-buon-1.jpg', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -134,16 +130,15 @@ INSERT INTO `phongban` (`MaPB`, `TenPhongBan`, `DiaChi`, `SoDienThoai`, `Email`,
 CREATE TABLE `taikhoan` (
   `TaiKhoan` varchar(255) NOT NULL,
   `MatKhau` varchar(255) NOT NULL,
-  `HoTen` varchar(255) NOT NULL,
-  `PhanQuyen` int(11) NOT NULL DEFAULT 3
+  `HoTen` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `taikhoan`
 --
 
-INSERT INTO `taikhoan` (`TaiKhoan`, `MatKhau`, `HoTen`, `PhanQuyen`) VALUES
-('admin', '21232f297a57a5a743894a0e4a801fc3', 'Nguyễn Văn A', 3);
+INSERT INTO `taikhoan` (`TaiKhoan`, `MatKhau`, `HoTen`) VALUES
+('admin', '21232f297a57a5a743894a0e4a801fc3', 'Nguyễn Văn A');
 
 -- --------------------------------------------------------
 
@@ -167,9 +162,10 @@ CREATE TABLE `traluong` (
 --
 
 INSERT INTO `traluong` (`MaTraLuong`, `MaNV`, `Thang`, `Nam`, `PhuCapKhac`, `Thuong`, `Phat`, `TongLuong`) VALUES
-(7, 5, 1, 2024, 0, 100000, 0, 11800000),
-(8, 6, 4, 2024, 0, 0, 0, 10100000),
-(9, 7, 6, 2024, 0, 500000, 100000, 10500000);
+(1, 2, 11, 2023, 500000, 300000, 100000, 12020000),
+(5, 4, 11, 2023, 0, 500000, 200000, 14900000),
+(6, 4, 1, 2024, 0, 0, 0, 21600000),
+(7, 5, 1, 2024, 0, 100000, 0, 11800000);
 
 -- --------------------------------------------------------
 
@@ -191,8 +187,7 @@ CREATE TABLE `trinhdohocvan` (
 
 INSERT INTO `trinhdohocvan` (`MaTDHV`, `BacTrinhDo`, `ChuyenNganh`, `NamTotNghiep`, `NoiDaoTao`) VALUES
 (1, 'Cử Nhân', 'Tài Chính Ngân Hàng', 2023, 'Đại học Bình Dương'),
-(3, 'Kỹ Sư', 'Công nghệ thông tin', 2010, 'Đại học Bách Khoa - Hà Nội'),
-(4, 'Kỹ sư', 'Công Nghệ Thông Tin', 2024, 'Đại học Giao Thông Vận Tải');
+(3, 'Kỹ Sư', 'Công nghệ thông tin', 2010, 'Đại học Bách Khoa - Hà Nội');
 
 --
 -- Indexes for dumped tables
@@ -253,19 +248,19 @@ ALTER TABLE `trinhdohocvan`
 -- AUTO_INCREMENT for table `chucvu`
 --
 ALTER TABLE `chucvu`
-  MODIFY `MaCV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `MaCV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `luong`
 --
 ALTER TABLE `luong`
-  MODIFY `MaLuong` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `MaLuong` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `nhanvien`
 --
 ALTER TABLE `nhanvien`
-  MODIFY `MaNV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `MaNV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `phongban`
@@ -277,13 +272,13 @@ ALTER TABLE `phongban`
 -- AUTO_INCREMENT for table `traluong`
 --
 ALTER TABLE `traluong`
-  MODIFY `MaTraLuong` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `MaTraLuong` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `trinhdohocvan`
 --
 ALTER TABLE `trinhdohocvan`
-  MODIFY `MaTDHV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `MaTDHV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
